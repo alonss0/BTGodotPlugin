@@ -1,0 +1,45 @@
+plugins {
+    alias(libs.plugins.android.library)
+}
+
+def pluginName = "BTGodotPlugin"
+def pluginPackageName = "com.alonss0.godotplugin"
+def pluginClassName = pluginName
+
+android {
+    namespace 'com.alonss0.godotplugin'
+    compileSdk 35
+
+    defaultConfig {
+        minSdk 24
+
+        consumerProguardFiles "consumer-rules.pro"
+
+        manifestPlaceholders["pluginName"] = pluginName
+        manifestPlaceholders["pluginPackageName"] = pluginPackageName
+        manifestPlaceholders["pluginClassName"] = pluginClassName
+
+        buildConfigField("String", "GODOT_PLUGIN_NAME", "\"${pluginName}\"")
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation libs.godot
+}
+
